@@ -9,6 +9,7 @@ namespace SportsStore.WebUI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            //Huỳnh Thế Nghĩa - 0306241130
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
 
