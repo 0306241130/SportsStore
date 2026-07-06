@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SportsStore.Domain/SportsStore.Domain.csproj" />
+  <Project Path="SportsStore.Infarstructure/SportsStore.Infarstructure.csproj" />
+  <Project Path="SportsStore.WebUI/SportsStore.WebUI.csproj" />
+</Solution>
