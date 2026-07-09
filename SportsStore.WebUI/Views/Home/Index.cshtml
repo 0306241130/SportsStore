@@ -1,4 +1,8 @@
-﻿@model IEnumerable<SportsStore.Domain.Product>
+﻿@*Cách 1 dùng để duyệt và hiển thị dữ liệu, thích hợp cho View*@
+@* @model IEnumerable<SportsStore.Domain.Product>;  *@
+@*Cách 2 dùng để xây dựng truy vấn*@
+@model IQueryable<SportsStore.Domain.Product>;
+
 @{
     ViewData["Title"] = "Home Page";
 }
