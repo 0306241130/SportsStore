@@ -4,22 +4,24 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - Cửa hàng của tôi</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SportsStore.WebUI.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>Thanh điều hướng chung</header>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - SportsStore.WebUI</title>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/SportsStore.WebUI.styles.css" asp-append-version="true" />
-    </head>
-    <div>
+    <header class="fw-bold text-success bg-primary bg-gradient bg-opacity-50 p-3"><h1>SportsStore</h1></header>
+    <div class="row py-1">
+        <aside class="col-md-3 text-center fw-bold d-flex flex-column">Thanh điều hướng chung
+            <div class="d-flex flex-column bg-info bg-opacity-50 text-white flex-grow-1 rounded-2 justify-content-around">
+                <div ><a asp-controller="Home" asp-action="Index1" class="text-decoration-none">Trang Chủ</a></div>
+                <div><a asp-controller="Home" asp-action="About" class="text-decoration-none">Giới Thiệu</a> </div>
+                <div><a asp-controller="Home" asp-action="Contact" class="text-decoration-none">Liên Hệ</a></div>
+            </div>
+        </aside>
         @RenderBody()
     </div>
-    <footer>
-        <p>@DateTime.Today.ToShortDateString() - Cửa hàng của tôi</p>
+    <footer class="bg-info px-2 py-1">
+        <p class="text-center fw-bold">@DateTime.Today.ToShortDateString() - Cửa hàng của tôi</p>
     </footer>
 </body>
 </html>
