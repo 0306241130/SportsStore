@@ -1,0 +1,25 @@
+﻿    <!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Cửa hàng của tôi</title>
+</head>
+<body>
+    <header>Thanh điều hướng chung</header>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - SportsStore.WebUI</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/SportsStore.WebUI.styles.css" asp-append-version="true" />
+    </head>
+    <div>
+        @RenderBody()
+    </div>
+    <footer>
+        <p>@DateTime.Today.ToShortDateString() - Cửa hàng của tôi</p>
+    </footer>
+</body>
+</html>
