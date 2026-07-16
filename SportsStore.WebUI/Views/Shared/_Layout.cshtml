@@ -15,9 +15,16 @@
         <div class="container-fluid mt-4">
             <div class="row">
                 <aside class="col-md-3">
-
-                <<p>Đây là Sidebar (sẽ được phát triển ở các buổi sau).</p>
-                <p>Chúng ta có thể đặt các danh mục sản phẩm ở đây.</p>
+                    <div class="container-md">
+                    <div class="row">
+                        <ul class="bg-dark list-unstyled d-flex flex-column gap-3 align-items-center p-md-3 rounded-3">
+                            <li><a class="text-white text-decoration-none" asp-controller="Home" asp-action="About">About</a></li>
+                            <li><a class="text-white text-decoration-none" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                            <li><a class="text-white text-decoration-none" asp-controller="Home" asp-action="Product">Product</a></li>
+                        </ul>
+                    </div>
+                    </div>
+                    
                 </aside>
                 <main class="col-md-9">
                     @RenderBody()
