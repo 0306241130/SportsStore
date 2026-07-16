@@ -4,51 +4,28 @@
 @model IQueryable<SportsStore.Domain.Product>;
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Products";
 }
 
-<div class="text-center">
-    @* <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
-    <ul>
-        @foreach (var product in Model)
-        {
-            <li>@product.ProductID - @product.name - @product.Description - @product.Category - @product.Price</li>
-        }
-    </ul>
-
-   <div class="product-list">
-        @foreach (var product in Model)
-        {
-            <div class="product-item">
-                <p>@product.ProductID - @product.name - @product.Description - @product.Category - @product.Price</p>
+<div class="row">
+    @foreach(var p in Model)
+    {
+        <div class="col-md-4 col mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="@p.ImageUrl" alt="@p.name" class="card-img-top p-3" style="height:250px; object-fit: contain"/>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @p.name
+                        <span class="badge bg-primary rounded-pill float-end">
+                            @p.Price.ToString("c")
+                        </span>
+                    </h5>
+                    <p class="card-text">@p.Description</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@p.ProductID" class="btn btn-success" >Add To Cart</a>
+                </div>
             </div>
-        }
-   </div>
-
-   <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Caregory</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-           
-            @foreach(var product in Model)
-            {
-                <tr>
-                    <td>@product.ProductID</td>
-                    <td>@product.name</td>
-                    <td>@product.Description</td>
-                    <td>@product.Category</td>
-                    <td>@product.Price</td>
-                </tr>
-            }
-           
-        </tbody>
-    </table>
+        </div>
+    }
 </div>
