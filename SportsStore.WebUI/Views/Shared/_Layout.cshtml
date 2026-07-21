@@ -1,4 +1,7 @@
-﻿@model IEnumerable<SportsStore.Domain.Product>
+﻿@model IQueryable<SportsStore.Domain.Product>
+@{
+	
+}
 <!DOCTYPE html>  
 <html lang="en">
     <head>
@@ -22,7 +25,16 @@
                     @RenderBody()
                 </main>
             </div>
-            <page-link asp-controller="Home" asp-action="Index"  total-pages="@Model.Count()/2"></page-link>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center" >
+                    <nav aria-label="...">
+                        <ul class="pagination pagination-sm ">
+                               <page-link asp-controller="Home" asp-action="Index" total-pages="@ViewBag.TotalPages"></page-link>
+                        </ul> 
+                </nav>
+                </div>
+            </div>
+            
         </div>
         <footer class="border-top footer text-muted text-center p-3">
             <div class="container">

@@ -14,12 +14,12 @@ namespace SportsStore.WebUI.Infarstructure
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
 
-            output.TagName = "div";
+            output.TagName = "div class=\"page-item d-flex\"";
 
             for (int i = 1; i <= TotalPages; i++)
             {
                 output.Content.AppendHtml(
-                    $"<a href='/{AspController}/{AspAction}?page={i}'>{i}</a>"
+                    $"<a href='/{AspController}/{AspAction}?page={i}' class=\"page-link\">{i}</a>"
                 );
             }
 
