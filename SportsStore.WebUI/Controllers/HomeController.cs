@@ -15,9 +15,6 @@ namespace SportsStore.WebUI.Controllers
 
         public ViewResult Index() => View(_repository.Products);
 
-        public ViewResult Index1() => View(_repository.Products);
-
-        public ViewResult About() => View();
 
         //private readonly ILogger<HomeController> _logger;
 
