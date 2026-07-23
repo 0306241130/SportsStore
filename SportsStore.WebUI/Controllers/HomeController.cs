@@ -7,16 +7,29 @@ namespace SportsStore.WebUI.Controllers
     public class HomeController : Controller
     {
         private IProductRepository _repository;
-
+        public int PageSize = 4;
         public HomeController(IProductRepository repo)
         {
             _repository = repo;
         }
 
-        public ViewResult Index(int page = 1) {
-            var repo = _repository.Products.Skip((page - 1) * 2).Take(2);
-            ViewBag.TotalPages = (int)Math.Ceiling((double)_repository.Products.Count() / 2);
-            return View(repo);
+        public ViewResult Index(string? category ,int Productpage = 1) {
+
+            return View(new ProductListViewModel
+            {
+                Products = _repository.Products
+                .Where(p => category == null || p.Category == category )
+                .OrderBy(p => p.Category)
+                .Skip((Productpage - 1) * PageSize)
+                .Take(PageSize),
+
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = Productpage,
+                    ItemsPerPage = PageSize,
+                    TotalItems = category == null ? _repository.Products.Count() : _repository.Products.Where(p => p.Category == category).Count()
+                }
+            });
         }
 
 

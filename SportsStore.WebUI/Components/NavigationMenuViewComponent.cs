@@ -5,15 +5,18 @@ namespace SportsStore.WebUI.Components
 {
     public class NavigationMenuViewComponent : ViewComponent
     {
-        //private readonly IProductRepository _repository;
-        //public NavigationMenuViewComponent(IProductRepository repository)
-        //{
-        //    _repository = repository;
-        //}
+        private readonly IProductRepository _repository;
+        public NavigationMenuViewComponent(IProductRepository repository)
+        {
+            _repository = repository;
+        }
 
         public IViewComponentResult Invoke()
         {
-            var categories = new string[] { "WaterSports", "Soccer", "Chess" };
+            var categories = _repository.Products.
+                Select( p => p.Category).
+                Distinct().
+                OrderBy(c => c);
             return View(categories);
         }
     }

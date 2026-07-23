@@ -1,14 +1,14 @@
 ﻿@*Cách 1 dùng để duyệt và hiển thị dữ liệu, thích hợp cho View*@
 @* @model IEnumerable<SportsStore.Domain.Product>;  *@
 @*Cách 2 dùng để xây dựng truy vấn*@
-@model IQueryable<SportsStore.Domain.Product>;
+@model ProductListViewModel;
 
 @{
     ViewData["Title"] = "Products";
 }
 
 <div class="row">
-    @foreach(var p in Model)
+    @foreach(var p in Model.Products)
     {
         <div class="col-md-4 col mb-4">
             <div class="card h-100 shadow-sm">
@@ -29,3 +29,4 @@
         </div>
     }
 </div>
+<div page-model="@Model.PagingInfo" page-action="Index" class="btn btn-group float-end"></div>

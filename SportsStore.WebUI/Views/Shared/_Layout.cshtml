@@ -1,4 +1,4 @@
-﻿@model IQueryable<SportsStore.Domain.Product>
+﻿
 @{
 	
 }
@@ -24,15 +24,6 @@
                 <main class="col-md-9">
                     @RenderBody()
                 </main>
-            </div>
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center" >
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-sm ">
-                               <page-link asp-controller="Home" asp-action="Index" total-pages="@ViewBag.TotalPages"></page-link>
-                        </ul> 
-                </nav>
-                </div>
             </div>
             
         </div>
