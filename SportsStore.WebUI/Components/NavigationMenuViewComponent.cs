@@ -11,9 +11,10 @@ namespace SportsStore.WebUI.Components
         //    _repository = repository;
         //}
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string category)
         {
             var categories = new string[] { "WaterSports", "Soccer", "Chess" };
+            ViewBag.SelectedCategory = category;
             return View(categories);
         }
     }

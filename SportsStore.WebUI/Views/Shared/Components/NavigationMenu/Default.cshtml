@@ -3,12 +3,14 @@
 	<a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary" asp-route-category="">Home</a>
 	@foreach(var category in Model)
 	{
-		<a class="btn btn-outline-secondary"
-			asp-action="Index"
-			asp-controller="Home"
-			asp-route-category="@category"
-		>	
-			@category
-		</a>
+		@if (category == ViewBag.category)
+		{
+			<a asp-controller="Home" asp-action="Index" class="btn btn-secondary" asp-route-category="@category">@category</a>
+		}
+		else
+		{
+			<a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary" asp-route-category="@category">@category</a>
+		}
+
 	}
 </div>

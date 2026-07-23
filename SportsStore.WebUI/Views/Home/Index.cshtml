@@ -28,4 +28,13 @@
             </div>
         </div>
     }
+    <div class="row">
+        <div class="col-12 d-flex ">
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm ">
+                    <page-link asp-controller="Home" asp-action="Index" total-pages="@ViewBag.TotalPages" current-page="@ViewBag.CurrentPage" page-class-selected="bg-info"></page-link>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>

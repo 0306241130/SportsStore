@@ -13,8 +13,10 @@ namespace SportsStore.WebUI.Controllers
             _repository = repo;
         }
 
-        public ViewResult Index(int page = 1) {
+        public ViewResult Index(int page = 1,string category = null ) {
             var repo = _repository.Products.Skip((page - 1) * 2).Take(2);
+            ViewBag.category = category;
+            ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)_repository.Products.Count() / 2);
             return View(repo);
         }
