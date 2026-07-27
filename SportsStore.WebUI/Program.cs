@@ -13,6 +13,16 @@ namespace SportsStore.WebUI
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
 
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IOTimeout = TimeSpan.FromMinutes(30);
+
+                options.Cookie.HttpOnly = true;
+
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +39,8 @@ namespace SportsStore.WebUI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
 
 
