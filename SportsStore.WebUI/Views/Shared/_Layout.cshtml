@@ -1,7 +1,4 @@
-﻿@model IQueryable<SportsStore.Domain.Product>
-@{
-	
-}
+﻿
 <!DOCTYPE html>  
 <html lang="en">
     <head>
@@ -19,13 +16,14 @@
         <div class="container-fluid mt-4">
             <div class="row">
                 <aside class="col-md-3">
-				@await Component.InvokeAsync("NavigationMenu",ViewBag.category)
+                @await Component.InvokeAsync("NavigationMenu", @Model.PagingInfo.CurrentPageCategory)
                  </aside>
                 <main class="col-md-9">
                     @RenderBody()
                 </main>
             </div>
             
+
             
         </div>
         <footer class="border-top footer text-muted text-center p-3">

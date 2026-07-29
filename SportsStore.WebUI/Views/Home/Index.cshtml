@@ -1,14 +1,14 @@
 ﻿@*Cách 1 dùng để duyệt và hiển thị dữ liệu, thích hợp cho View*@
 @* @model IEnumerable<SportsStore.Domain.Product>;  *@
 @*Cách 2 dùng để xây dựng truy vấn*@
-@model IQueryable<SportsStore.Domain.Product>;
+@model ProductListViewModel;
 
 @{
     ViewData["Title"] = "Products";
 }
 
 <div class="row">
-    @foreach(var p in Model)
+    @foreach(var p in Model.Products)
     {
         <div class="col-md-4 col mb-4">
             <div class="card h-100 shadow-sm">
@@ -26,15 +26,9 @@
                     <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@p.ProductID" class="btn btn-success" >Add To Cart</a>
                 </div>
             </div>
+           
         </div>
     }
-    <div class="row">
-        <div class="col-12 d-flex ">
-            <nav aria-label="...">
-                <ul class="pagination pagination-sm ">
-                    <page-link asp-controller="Home" asp-action="Index" total-pages="@ViewBag.TotalPages" current-page="@ViewBag.CurrentPage" page-class-selected="bg-info"></page-link>
-                </ul>
-            </nav>
-        </div>
-    </div>
+   
 </div>
+<div page-model="@Model.PagingInfo" page-action="Index" class="btn btn-group float-end"></div>

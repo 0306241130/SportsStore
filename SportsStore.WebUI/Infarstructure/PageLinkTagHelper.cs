@@ -1,40 +1,61 @@
-﻿using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using SportsStore.WebUI.Models;
 
 namespace SportsStore.WebUI.Infarstructure
 {
-    public class PageLinkTagHelper:TagHelper
+    [HtmlTargetElement("div", Attributes  = "page-model")]
+    public class PageLinkTagHelper : TagHelper
     {
-        public string?  AspController { get; set; }
+        private IUrlHelperFactory urlHelperFactory;
 
-        public string?  AspAction { get; set; }
+        public PageLinkTagHelper (IUrlHelperFactory helperFactory)
+        {
+            urlHelperFactory = helperFactory;
+        }
 
-        public int CurrentPage { get; set; }
+        [ViewContext]
+        [HtmlAttributeNotBound]
 
-        public int TotalPages { get; set; }
+        public ViewContext? ViewContext { get; set; }
 
-        public string? PageClass { get; set; }
+        public PagingInfo? PageModel { get ; set; }
 
-        public string? PageClassSelected { get; set; }
+        public string? PageAction { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            if(ViewContext != null && PageModel != null)
+            {
+                IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
 
-            output.TagName = "div class=\"page-item d-flex\"";
 
-            for (int i = 1; i <= TotalPages; i++)
-            {   if (i == CurrentPage)
+                TagBuilder result = new TagBuilder("div");
+
+                for (int i = 1; i <= PageModel.TotalPages; i++)
                 {
-                    output.Content.AppendHtml(
-                        $"<a href='/{AspController}/{AspAction}?page={i}' class=\"page-link {PageClass} {PageClassSelected}\">{i}</a>"
-                    );
-                }
-                else
-                {
-                    output.Content.AppendHtml(
-                        $"<a href='/{AspController}/{AspAction}?page={i}' class=\"page-link\">{i}</a>"
-                    );
-                }
-            }
+                    TagBuilder tag = new TagBuilder("a");
 
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, new { productPage = i, category = PageModel.CurrentPageCategory });
+
+                    tag.InnerHtml.Append(i.ToString());
+
+                    if( i == PageModel.CurrentPage)
+                    {
+                        tag.AddCssClass("btn btn-primary");
+                    }
+                    else
+                    {
+                        tag.AddCssClass("btn btn-outline-primary");
+                    }
+
+                    result.InnerHtml.AppendHtml(tag);
+
+                }
+                output.Content.AppendHtml(result.InnerHtml);
+            }   
         }
     }
 }

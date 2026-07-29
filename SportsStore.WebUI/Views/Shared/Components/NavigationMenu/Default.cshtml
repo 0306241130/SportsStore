@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<string>
-<div class="d-grid gap-2">
+<div class="d-grid gap-2 sticky-md-top">
 	<a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary" asp-route-category="">Home</a>
 	@foreach(var category in Model)
 	{
-		@if (category == ViewBag.category)
+
+		@if (category == ViewBag.SelectedCategory )
 		{
 			<a asp-controller="Home" asp-action="Index" class="btn btn-secondary" asp-route-category="@category">@category</a>
 		}
@@ -11,6 +12,14 @@
 		{
 			<a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary" asp-route-category="@category">@category</a>
 		}
+
+		@* <a class="btn btn-outline-secondary"
+			asp-action="Index"	
+			asp-controller="Home"
+			asp-route-category="@category"
+		>	
+			@category
+		</a> *@
 
 	}
 </div>
