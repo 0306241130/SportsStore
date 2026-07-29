@@ -1,0 +1,54 @@
+﻿@model SportsStore.WebUI.Models.Cart
+@{
+	ViewData["Title"] = " Giỏ hàng của bạn";
+}
+<h2 class=" mb-4"> Giỏ hàng của bạn</h2>
+<table class="table table-bordered table-striped">
+	<thead class="table-dark">
+		<tr>
+			<th>Số lượng</th>
+			<th>Sản phẩm</th>
+			<th class="text-end">Đơn giá</th>
+			<th class="text-end">Thành Tiền</th>
+			<th class="text-center">Hành Động</th>
+		</tr>
+	</thead>
+	<tbody>
+		@*Nếu danh sách Lines trong giỏ hàng rỗng*@
+		@if(Model.Lines.Count == 0)
+		{
+			<tr>
+				<td colspan="5" class="text-center text-muted">
+					Giỏ hàng rỗng
+				</td>
+			</tr>
+		}
+		@foreach(var line in Model.Lines)
+		{
+			<tr>
+				<td class="text-end">@line.Quantity</td>
+				<td>@line.Product.name</td>
+				<td class="text-end">@line.Product.Price.ToString("C")</td>
+				<td class="text-end">@((line.Quantity * line.Product.Price).ToString("C"))</td>
+				<td class="text-center">
+					<form asp-action="RemoveFormCart" method="post">
+						<input type="hidden" name="productID" value="@line.Product.ProductID"/>
+						<input type="hidden" name="returnUrl" value="@ViewBag.returnUrl"/>
+						<button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
+			<td class="text-end fw-bold text-danger">@Model.ComputeTotalValue().ToString("C")</td>
+			<td></td>	
+		</tr>
+	</tfoot>
+</table>
+<div class="text-center mt-3">
+	<a class="btn btn-secondary" href="@(ViewBag.returnUrl ?? "/") ">Tiếp tục mua sắm</a>
+	<a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Thanh toán ngày </a>
+</div>

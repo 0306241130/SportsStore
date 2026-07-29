@@ -32,7 +32,7 @@ namespace SportsStore.WebUI.Models
 
         public virtual void RemoveLine(Product product) => Lines.RemoveAll(l => l.Product.ProductID == product.ProductID);
 
-        public decimal ComputeTotalValue() => Lines.Sum(e => e.Product.Price * e.Product.Price);
+        public decimal ComputeTotalValue() => Lines.Sum(e => e.Quantity * e.Product.Price);
 
         public virtual void Clear() => Lines.Clear();
     }
