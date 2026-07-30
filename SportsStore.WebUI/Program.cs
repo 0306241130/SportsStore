@@ -1,6 +1,7 @@
 using SportsStore.Domain;
 using SportsStore.Infarstructure;
-using static System.Collections.Specialized.BitVector32;
+using SportsStore.WebUI.Infarstructure;
+
 namespace SportsStore.WebUI
 {
     public class Program
@@ -13,6 +14,7 @@ namespace SportsStore.WebUI
             //Huỳnh Thế Nghĩa - 0306241130
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
+            
             //Bước 1 :Cung câp kho lưu trữ cho sesion
             //Session cần một nơi để cất dữ liệu AddDistributedMemoryCache() cung cấp
             // một kho lưu trữ ngay trong bộ nhớ của server. Đây là lựa chọn đơn giản nhất.
@@ -29,7 +31,7 @@ namespace SportsStore.WebUI
                 // Đánh dấu Cookie này là thiết yếu, không bị chặn bởi các quy định GDPR(luật bảo vệ dữ liệu)
                 options.Cookie.IsEssential = true;
             });
-
+            builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
