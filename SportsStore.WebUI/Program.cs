@@ -1,7 +1,7 @@
 using SportsStore.Domain;
 using SportsStore.Infarstructure;
 using SportsStore.WebUI.Infarstructure;
-
+using SportsStore.WebUI.Models;
 namespace SportsStore.WebUI
 {
     public class Program
@@ -13,6 +13,7 @@ namespace SportsStore.WebUI
             // Add services to the container.
             //Huỳnh Thế Nghĩa - 0306241130
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
             
             //Bước 1 :Cung câp kho lưu trữ cho sesion

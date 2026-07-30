@@ -4,14 +4,7 @@ namespace SportsStore.Domain
 {
     public class Cart
     {
-        //Lop dai dien cho mot san pham trong gio hang (mot san pham va so luong cua no)    
-        public class CartLine
-        {
-            public int CartLineId { get; set; }
-            public Product product { get; set; } = new Product();
-
-            public int Quantity { get; set; }
-        }
+     
 
         //Danh sach cac mat hang trong gio
         public List<CartLine> Lines { get; set; } = new List<CartLine>();
@@ -48,5 +41,14 @@ namespace SportsStore.Domain
             Lines.Clear();
         }
 
+    }
+
+    //Lop dai dien cho mot san pham trong gio hang (mot san pham va so luong cua no)    
+    public class CartLine
+    {
+        public int CartLineId { get; set; }
+        public Product product { get; set; } = new Product();
+
+        public int Quantity { get; set; }
     }
 }

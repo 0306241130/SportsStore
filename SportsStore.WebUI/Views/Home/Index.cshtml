@@ -23,7 +23,13 @@
                     <p class="card-text">@p.Description</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@p.ProductID" class="btn btn-success" >Add To Cart</a>
+                   <div class="card-footer text-center">
+                       <form asp-action="AddToCart" asp-controller="Cart"  method="post">
+							<input type="hidden" name="ProductID" value="@p.ProductID" />
+							<input type="hidden" name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString.ToUriComponent())" />
+                            <button type="submit" class="btn btn-success btn-sm float-end">Add To Cart</button>
+                        </form>
+                   </div>
                 </div>
             </div>
            
@@ -31,4 +37,5 @@
     }
    
 </div>
+
 <div page-model="@Model.PagingInfo" page-action="Index" class="btn btn-group float-end"></div>
