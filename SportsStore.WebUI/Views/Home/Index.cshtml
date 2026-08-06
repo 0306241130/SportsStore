@@ -12,10 +12,10 @@
     {
         <div class="col-md-4 col mb-4">
             <div class="card h-100 shadow-sm">
-                <img src="@p.ImageUrl" alt="@p.name" class="card-img-top p-3" style="height:250px; object-fit: contain"/>
+                <img src="@p.ImgUrl" alt="@p.Name" class="card-img-top p-3" style="height:250px; object-fit: contain"/>
                 <div class="card-body">
                     <h5 class="card-title">
-                        @p.name
+                        @p.Name
                         <span class="badge bg-primary rounded-pill float-end">
                             @p.Price.ToString("c")
                         </span>
@@ -25,8 +25,8 @@
                 <div class="card-footer text-center">
                    <div class="card-footer text-center">
                        <form asp-action="AddToCart" asp-controller="Cart"  method="post">
-							<input type="hidden" name="ProductID" value="@p.ProductID" />
-							<input type="hidden" name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString.ToUriComponent())" />
+							<input type="hidden" Name="ProductId" value="@p.ProductId" />
+							<input type="hidden" Name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString.ToUriComponent())" />
                             <button type="submit" class="btn btn-success btn-sm float-end">Add To Cart</button>
                         </form>
                    </div>

@@ -26,8 +26,8 @@ namespace SportsStore.WebUI.Controllers
         }
 
         //Action de them san pham vao gio
-        public RedirectToActionResult AddToCart(int productID, string returnUrl) { 
-            Product? product = _repository.Products.FirstOrDefault(p => p.ProductID == productID);
+        public RedirectToActionResult AddToCart(int ProductId, string returnUrl) { 
+            Product? product = _repository.Products.FirstOrDefault(p => p.ProductId == ProductId);
 
             if(product != null)
             {
@@ -38,10 +38,10 @@ namespace SportsStore.WebUI.Controllers
         }
 
         //Action de xoa san pham khoi gio
-        public RedirectToActionResult RemoveFormCart(int productID ,string returnUrl)
+        public RedirectToActionResult RemoveFormCart(int ProductId ,string returnUrl)
         {
             Product? product = _repository.Products
-                .FirstOrDefault(p => p.ProductID ==productID);
+                .FirstOrDefault(p => p.ProductId ==ProductId);
 
             if (product != null) { 
                 cartService.RemoveItem(product);

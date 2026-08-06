@@ -12,7 +12,7 @@ namespace SportsStore.Domain
         //Them mot san pham vao gio hoac tang so luong neu da ton tai
 
         public virtual void AddItem(Product product, int quantity) { 
-            CartLine? line = Lines.Where(p => p.product.ProductID == product.ProductID).FirstOrDefault();
+            CartLine? line = Lines.Where(p => p.product.ProductId == product.ProductId).FirstOrDefault();
 
             if (line == null) {
                 Lines.Add(new CartLine
@@ -28,7 +28,7 @@ namespace SportsStore.Domain
         }
 
         public virtual void RemoveItem(Product product) {
-            Lines.RemoveAll(l => l.product.ProductID == product.ProductID);
+            Lines.RemoveAll(l => l.product.ProductId == product.ProductId);
         }
 
         public decimal ComputeTotalValue()

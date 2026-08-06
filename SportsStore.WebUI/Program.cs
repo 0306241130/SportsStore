@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SportsStore.Domain;
 using SportsStore.Infarstructure;
 using SportsStore.WebUI.Infarstructure;
@@ -13,9 +14,14 @@ namespace SportsStore.WebUI
             // Add services to the container.
             //Huỳnh Thế Nghĩa - 0306241130
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ApplicationDBContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SportsStoreConnection"));
+            });
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
-            
+            //builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
+            builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+
             //Bước 1 :Cung câp kho lưu trữ cho sesion
             //Session cần một nơi để cất dữ liệu AddDistributedMemoryCache() cung cấp
             // một kho lưu trữ ngay trong bộ nhớ của server. Đây là lựa chọn đơn giản nhất.
@@ -66,7 +72,7 @@ namespace SportsStore.WebUI
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            SeedData.EnsurePopulated(app);
             app.Run();
         }
     }

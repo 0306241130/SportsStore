@@ -17,14 +17,14 @@
         {
             <tr>
                 <td class="text-center">@line.Quantity</td>
-                <td class="text-start">@line.product.name</td>
+                <td class="text-start">@line.product.Name</td>
                 <td class="text-end">@line.product.Price.ToString("c")</td>
                 <td class="text-end">
                     @((line.Quantity * line.product.Price).ToString("c"))
                 </td>
                 <td>
                     <form asp-action="RemoveFormCart" method="post">
-                        <input type="hidden" name="ProductID" value="@line.product.ProductID"/>
+                        <input type="hidden" name="ProductId" value="@line.product.ProductId"/>
                         <input type="hidden" name="returnUrl" value="@Model.returnUrl"/>
                         <button type="submit" class="btn btn-sm btn-danger">
                             Remove

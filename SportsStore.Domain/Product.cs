@@ -8,9 +8,9 @@ namespace SportsStore.Domain
 {
     public class Product
     {
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
 
-        public  string? name { get; set; }
+        public  string? Name { get; set; }
 
         public  string? Description { get; set; }
 
@@ -18,6 +18,6 @@ namespace SportsStore.Domain
 
         public  string? Category { get; set; }
 
-        public string? ImageUrl { get; set; }
+        public string? ImgUrl { get; set; }
     }
 }

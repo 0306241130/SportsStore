@@ -1,21 +1,36 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using SportsStore.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SportsStore.Domain;
+
 namespace SportsStore.Infarstructure
 {
-    public class FakeProductRepository : IProductRepository
+    public static class SeedData
     {
-        public IQueryable<Product> Products => new List<Product>
+        public static void EnsurePopulated(IApplicationBuilder app)
         {
-            new Product { ProductId = 1, Name = "Football", Description = "A football", Price = 25, Category = "Soccer" ,ImgUrl = "/images/connor-coyne-OgqWLzWRSaI-unsplash.jpg"},
-            
-            new Product { ProductId = 2, Name = "Surf board", Description = "A surf board", Price = 179, Category = "Watersports" , ImgUrl = "/images/gentrit-sylejmani-JjUyjE-oEbM-unsplash.jpg" },
-            
-            new Product { ProductId = 3, Name = "Running shoes", Description = "A pair of running shoes", Price = 95, Category = "Running" , ImgUrl = "/images/sandro-schuh-HgwY_YQ1m0w-unsplash.jpg"},
-            
+            ApplicationDBContext context = app.ApplicationServices.CreateScope()
+                .ServiceProvider.GetRequiredService<ApplicationDBContext>();
+
+            if (context.Database.GetPendingMigrations().Any())
+            {
+                context.Database.Migrate();
+            }
+
+            if (!context.Products.Any())
+            {
+                context.Products.AddRange(
+                    new Product { ProductId = 1, Name = "Football", Description = "A football", Price = 25, Category = "Soccer", ImgUrl = "/images/connor-coyne-OgqWLzWRSaI-unsplash.jpg" },
+
+            new Product { ProductId = 2, Name = "Surf board", Description = "A surf board", Price = 179, Category = "Watersports", ImgUrl = "/images/gentrit-sylejmani-JjUyjE-oEbM-unsplash.jpg" },
+
+            new Product { ProductId = 3, Name = "Running shoes", Description = "A pair of running shoes", Price = 95, Category = "Running", ImgUrl = "/images/sandro-schuh-HgwY_YQ1m0w-unsplash.jpg" },
+
             new Product { ProductId = 4, Name = "Basketball", Description = "An official size basketball", Price = 35, Category = "Soccer", ImgUrl = "/images/basketball.jpg" },
 
             new Product { ProductId = 5, Name = "Goalkeeper Gloves", Description = "Professional goalkeeper gloves", Price = 45, Category = "Soccer", ImgUrl = "/images/goalkeeper-gloves.jpg" },
@@ -34,9 +49,10 @@ namespace SportsStore.Infarstructure
 
             new Product { ProductId = 12, Name = "Water Bottle", Description = "Insulated sports water bottle", Price = 18, Category = "Running", ImgUrl = "/images/water-bottle.jpg" },
 
-            new Product { ProductId = 13, Name = "Running Socks", Description = "Moisture-wicking running socks", Price = 15, Category = "Running", ImgUrl = "/images/running-socks.jpg" },
-
-
-        }.AsQueryable();
+            new Product { ProductId = 13, Name = "Running Socks", Description = "Moisture-wicking running socks", Price = 15, Category = "Running", ImgUrl = "/images/running-socks.jpg" }
+                );
+                context.SaveChanges();
+            }
+        }
     }
 }
