@@ -19,5 +19,7 @@ namespace SportsStore.Domain
         public  string? Category { get; set; }
 
         public string? ImgUrl { get; set; }
+
+        public string? Color { get; set; }
     }
 }
