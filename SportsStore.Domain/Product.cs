@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Http;
+//using System.ComponentModel.DataAnnotations.Schema;
+//[NotMapped]
 
 namespace SportsStore.Domain
 {
@@ -21,5 +24,8 @@ namespace SportsStore.Domain
         public string? ImgUrl { get; set; }
 
         public string? Color { get; set; }
+
+        //[NotMapped]
+        //public IFormFile Image { get; set; }
     }
 }
