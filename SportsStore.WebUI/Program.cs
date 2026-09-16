@@ -3,6 +3,8 @@ using SportsStore.Domain;
 using SportsStore.Infarstructure;
 using SportsStore.WebUI.Infarstructure;
 using SportsStore.WebUI.Models;
+using Microsoft.AspNetCore.Identity;
+using SportsStore.Infrastructure;
 namespace SportsStore.WebUI
 {
     public class Program
@@ -14,10 +16,33 @@ namespace SportsStore.WebUI
             // Add services to the container.
             //Huỳnh Thế Nghĩa - 0306241130
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ApplicationDBContext>(options =>
+
+
+            var connectionString =
+    builder.Configuration.GetConnectionString("AppIdentityDbContextConnection")
+    ?? throw new InvalidOperationException(
+        "Connection string 'AppIdentityDbContextConnection' not found.");
+
+            builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            builder.Services.AddDefaultIdentity<SportsStore.Domain.AppUser>(options =>
+                options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+
+
+
+
+
+
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SportsStoreConnection"));
             });
+
+         
             builder.Services.AddHttpContextAccessor();
             //builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
             builder.Services.AddScoped<IProductRepository, EFProductRepository>();
@@ -63,9 +88,11 @@ namespace SportsStore.WebUI
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication(); // Đảm bảo có dòng này
+            app.UseAuthorization(); // và dòng này
+            app.MapRazorPages(); //
 
-            
+
 
 
 
@@ -73,6 +100,7 @@ namespace SportsStore.WebUI
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             SeedData.EnsurePopulated(app);
+            IdentitySeedData.EnsurePopulated(app);
             app.Run();
         }
     }

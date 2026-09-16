@@ -14,8 +14,8 @@ namespace SportsStore.Infarstructure
     {
         public static void EnsurePopulated(IApplicationBuilder app)
         {
-            ApplicationDBContext context = app.ApplicationServices.CreateScope()
-                .ServiceProvider.GetRequiredService<ApplicationDBContext>();
+            ApplicationDbContext context = app.ApplicationServices.CreateScope()
+                .ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             if (context.Database.GetPendingMigrations().Any())
             {

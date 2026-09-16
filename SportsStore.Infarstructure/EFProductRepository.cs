@@ -9,9 +9,9 @@ namespace SportsStore.Infarstructure
 {
     public class EFProductRepository : IProductRepository
     {
-        private ApplicationDBContext _context;
+        private ApplicationDbContext _context;
 
-        public EFProductRepository(ApplicationDBContext ctx)
+        public EFProductRepository(ApplicationDbContext ctx)
         {
             _context = ctx;
         }

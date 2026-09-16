@@ -10,7 +10,7 @@ using SportsStore.Infarstructure;
 
 namespace SportsStore.Infarstructure.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260810102648_InitialCreate")]
     partial class InitialCreate
     {

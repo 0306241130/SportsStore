@@ -10,7 +10,7 @@ using SportsStore.Infarstructure;
 
 namespace SportsStore.Infarstructure.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260810105910_AddProductColor")]
     partial class AddProductColor
     {
