@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SportsStore.Domain;
 using SportsStore.Infarstructure;
+using SportsStore.Infrastructure;
 using SportsStore.WebUI.Infarstructure;
 using SportsStore.WebUI.Models;
-using Microsoft.AspNetCore.Identity;
-using SportsStore.Infrastructure;
+using System.Text;
 namespace SportsStore.WebUI
 {
     public class Program
@@ -30,10 +34,35 @@ namespace SportsStore.WebUI
                 options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+                // Địa chỉ của Angular dev server
+            });
 
 
+            // 2. Cấu hình Authentication với JWT
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false, // Tạm thời tắt kiểm tra hết hạn để dễ  test
+                    ValidateIssuerSigningKey = true
+                };
+            });
 
-
+            builder.Services.AddAuthorization();
 
 
 
@@ -42,7 +71,7 @@ namespace SportsStore.WebUI
                 options.UseSqlServer(builder.Configuration.GetConnectionString("SportsStoreConnection"));
             });
 
-         
+
             builder.Services.AddHttpContextAccessor();
             //builder.Services.AddScoped<IProductRepository, FakeProductRepository>();
             builder.Services.AddScoped<IProductRepository, EFProductRepository>();
@@ -64,12 +93,18 @@ namespace SportsStore.WebUI
                 options.Cookie.IsEssential = true;
             });
             builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+
+            
             var app = builder.Build();
+        
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+               
+             
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -82,15 +117,23 @@ namespace SportsStore.WebUI
 
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
+
+            
+            app.UseCors("AllowSpecificOrigin"); // Kích hoạt CORS
+            
             app.UseSession();
 
             app.UseRouting();
 
-            app.UseAuthentication(); // Đảm bảo có dòng này
-            app.UseAuthorization(); // và dòng này
-            app.MapRazorPages(); //
+            // --- SỬA LẠI THỨ TỰ ---
+            // Authentication phải đứng trước Authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapRazorPages(); // Đảm bảo dòng này có để các trang Identity hoạt động
 
 
 
